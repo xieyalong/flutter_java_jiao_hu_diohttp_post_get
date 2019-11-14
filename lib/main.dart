@@ -33,23 +33,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  static const MethodChannel _methodChannel =
-  MethodChannel('samples.flutter.io/platform_view');
+//  "samples.flutter.io/flutter_java_jiao_hu"
+  //flutter_java_jiao_hu=项目名，保持和java的一致
+  static const MethodChannel platform = const MethodChannel("samples.flutter.io/flutter_java_jiao_hu");
 
-  int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  Future<void> _launchPlatformCount() async {
-    final int platformCounter =
-    await _methodChannel.invokeMethod('switchView', _counter);
-    setState(() {
-      _counter = platformCounter;
-    });
+  Future<void> startActivity() async {
+    Map map={'a':'A'};
+     String str =await platform.invokeMethod('key_startActivity', map);
+    print('>]------s${str}');
+    setState(() { });
   }
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -65,14 +58,15 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'Button tapped $_counter time${ _counter == 1 ? '' : 's' }.',
+                  '',
                   style: const TextStyle(fontSize: 17.0),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(18.0),
                   child: RaisedButton(
                       child:const Text('跳转原生页面'),
-                      onPressed: _launchPlatformCount),
+                      onPressed: startActivity
+                  ),
                 ),
                 RaisedButton(
                   child: Text('和原生数据交互'),
@@ -102,10 +96,6 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ],
     ),
-    floatingActionButton: FloatingActionButton(
-      onPressed: _incrementCounter,
-      tooltip: 'Increment',
-      child: const Icon(Icons.add),
-    ),
+
   );
 }

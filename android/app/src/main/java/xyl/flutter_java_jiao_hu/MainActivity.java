@@ -6,6 +6,7 @@ import io.flutter.app.FlutterActivity;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugins.GeneratedPluginRegistrant;
 import io.flutter.plugin.common.MethodChannel;
+import xyl.flutter_java_jiao_hu.CountActivity;
 public class MainActivity extends FlutterActivity {
   private static final String javaKey = "samples.flutter.io/flutter_java_jiao_hu";
   MethodChannel methodChannel;
@@ -27,6 +28,11 @@ public class MainActivity extends FlutterActivity {
           key_login(result,methodCall.arguments);
         }else  if (methodCall.method.equals("key_decode")) {
           key_decode(result,methodCall.arguments);
+        }else  if (methodCall.method.equals("key_startActivity")) {
+          result.success("回调原生页面成功1");
+          Intent intent = new Intent(MainActivity.this, CountActivity.class);
+          startActivity(intent);
+          result.success("在跳转之后给flutter传递失败");
         }
       }
     });
